@@ -1,7 +1,5 @@
 package uniandes.dpoo.aerolinea.exceptions;
 
-import uniandes.dpoo.aerolinea.modelo.Vuelo;
-
 /**
  * Esta clase se usa para anunciar que se intentó vender un tiquete para un vuelo que ya está lleno
  */
@@ -9,9 +7,9 @@ import uniandes.dpoo.aerolinea.modelo.Vuelo;
 public class VueloSobrevendidoException extends Exception
 {
 
-    public VueloSobrevendidoException( Vuelo vuelo )
+    public VueloSobrevendidoException( Object vuelo )
     {
-        super( "El vuelo " + vuelo.getRuta( ).getCodigoRuta( ) + " del " + vuelo.getFecha( ) + " no tiene cupo" );
+        super( );
     }
 
 }

@@ -1,5 +1,4 @@
 package uniandes.dpoo.aerolinea.tiquetes;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,35 +10,33 @@ import uniandes.dpoo.aerolinea.modelo.cliente.Cliente;
  */
 public class GeneradorTiquetes
 {
-    /**
-     * Un conjunto con los códigos que ya han sido usados anteriormente para otros tiquetes.
-     * 
-     * Este conjunto se utiliza para no correr el riesgo de repetir un código.
-     */
-    private static Set<String> codigos = new HashSet<String>( );
+    private static Set<String> codigos = new HashSet<>( );
 
-    /**
-     * Construye un nuevo tiquete con los datos dados y con un identificador que corresponde a una cadena con 7 dígitos
-     * @param vuelo El vuelo al que está asociado el tiquete
-     * @param cliente El ciente que compró el tiquete
-     * @param tarifa El valor que se le cobró al cliente por el tiquete
-     * @return El nuevo tiquete, inicializado con un código único
-     */
     public static Tiquete generarTiquete( Vuelo vuelo, Cliente cliente, int tarifa )
     {
-        int numero = ( int ) ( Math.random( ) * 10e7 );
-        String codigo = "" + numero;
-        while( codigos.contains( codigo ) )
-        {
-            numero = ( int ) ( Math.random( ) * 10e7 );
-            codigo = "" + numero;
-        }
-
-        while( codigo.length( ) < 7 )
-            codigo = "0" + codigo;
-
-        return new Tiquete( codigo, vuelo, cliente, tarifa );
+    	String codigo = generarCodigoUnico();
+        Tiquete tiquete = new Tiquete(codigo, vuelo, cliente, tarifa);
+        registrarTiquete(tiquete);
+        return tiquete;
     }
+    
+    private static String generarCodigoUnico()
+    {
+        String codigo;
+        do
+        {
+            codigo = generarCodigoAleatorio();
+        } while (codigos.contains(codigo));
+        return codigo;
+    }
+    
+    private static String generarCodigoAleatorio()
+    {
+        int numero = (int) (Math.random() * 10e7);
+        String codigo = String.format("%07d", numero);
+        return codigo;
+    }
+
 
     /**
      * Registra que un cierto tiquete ya fue vendido, para que el generador de tiquetes no vaya a generar otro tiquete con el mismo código
@@ -47,7 +44,8 @@ public class GeneradorTiquetes
      */
     public static void registrarTiquete( Tiquete unTiquete )
     {
-        // TODO implementar
+    	String codigo = unTiquete.getCodigo();
+    	codigos.add(codigo);
     }
 
     /**
@@ -57,7 +55,6 @@ public class GeneradorTiquetes
      */
     public static boolean validarTiquete( String codigoTiquete )
     {
-        // TODO implementar
-        return false;
+    	return codigos.contains(codigoTiquete);
     }
 }

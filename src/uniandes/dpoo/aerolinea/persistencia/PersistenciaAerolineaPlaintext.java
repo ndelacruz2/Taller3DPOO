@@ -1,25 +1,26 @@
 package uniandes.dpoo.aerolinea.persistencia;
 
 import uniandes.dpoo.aerolinea.modelo.Aerolinea;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
-/**
- * Esta clase no está implementada - y no debería implementarse como parte del taller.
- * 
- * Su objetivo es sólo ilustrar que podría haber varias implementaciones de la misma interfaz, y que durante la ejecución alguien podría decidir cuál de estas implementaciones
- * usar.
- */
-public class PersistenciaAerolineaPlaintext implements IPersistenciaAerolinea
-{
+public class PersistenciaAerolineaPlaintext implements IPersistenciaAerolinea {
     @Override
-    public void cargarAerolinea( String archivo, Aerolinea aerolinea )
-    {
-        // No está implementado (y no es necesario para el taller)
+    public void cargarAerolinea(String archivo, Aerolinea aerolinea) {
     }
 
     @Override
-    public void salvarAerolinea( String archivo, Aerolinea aerolinea )
-    {
-        // No está implementado (y no es necesario para el taller)
-    }
+    public void salvarAerolinea(String archivo, Aerolinea aerolinea) {
+        try {
+            FileWriter fileWriter = new FileWriter(archivo);
+            PrintWriter printWriter = new PrintWriter(fileWriter);
 
+            printWriter.println(aerolinea.toString());
+
+            printWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+    }
+  }
 }

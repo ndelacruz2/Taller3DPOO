@@ -16,7 +16,7 @@ import uniandes.dpoo.aerolinea.modelo.Ruta;
 import uniandes.dpoo.aerolinea.modelo.Vuelo;
 import uniandes.dpoo.aerolinea.modelo.cliente.Cliente;
 import uniandes.dpoo.aerolinea.modelo.cliente.ClienteCorporativo;
-import uniandes.dpoo.aerolinea.modelo.cliente.ClienteNatural;
+import uniandes.dpoo.aerolinea.modelo.cliente.ClientaNatural;
 import uniandes.dpoo.aerolinea.tiquetes.GeneradorTiquetes;
 import uniandes.dpoo.aerolinea.tiquetes.Tiquete;
 
@@ -90,13 +90,13 @@ public class PersistenciaTiquetesJson implements IPersistenciaTiquetes
             // lo hace alguien externo al objeto que se carga; en la segunda estrategia, los objetos saben cargarse.
             // En general es una mala idea mezclar las dos estrategias: acá lo hacemos para ilustrar las dos posibilidades y mostrar las ventajas y desventajas de cada una.
             // Lo que sí es recomendable es seleccionar una estrategia y usarla consistentemente para cargar y salvar.
-            if( ClienteNatural.NATURAL.equals( tipoCliente ) )
+            if( ClientaNatural.NATURAL.equals( tipoCliente ) )
             {
                 // 1. En esta estrategia, en ESTA clase se realiza todo lo que tiene que ver con cargar objetos de la clase ClienteNatural
                 // Al revisar el código de la clase ClienteNatural, no hay nada que tenga que ver con cargar o salvar.
                 // En este caso, la persistencia es una preocupación transversal de la que no se ocupa la clase ClienteNatural
                 String nombre = cliente.getString( NOMBRE_CLIENTE );
-                nuevoCliente = new ClienteNatural( nombre );
+                nuevoCliente = new ClientaNatural( nombre );
             }
             else
             {
@@ -127,7 +127,7 @@ public class PersistenciaTiquetesJson implements IPersistenciaTiquetes
             // Acá también se utilizaron dos estrategias para salvar los clientes.
             // Para los clientes naturales, esta clase extrae la información de los objetos y la organiza para que luego sea salvada.
             // Para los clientes corporativos, la clase ClienteCorporativo hace todo lo que está en sus manos para persistir un cliente
-            if( ClienteNatural.NATURAL.equals( cliente.getTipoCliente( ) ) )
+            if( ClientaNatural.NATURAL.equals( cliente.getTipoCliente( ) ) )
             {
                 JSONObject jCliente = new JSONObject( );
                 jCliente.put( NOMBRE_CLIENTE, cliente.getIdentificador( ) );
